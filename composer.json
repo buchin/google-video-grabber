@@ -1,6 +1,6 @@
 {
-    "name": "buchin/google-image-grabber",
-    "description": "Scrape google images",
+    "name": "buchin/google-web-grabber",
+    "description": "Scrape google web",
     "type": "library",
     "require": {
         "campo/random-user-agent": "^1.2",
@@ -17,7 +17,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Buchin\\GoogleImageGrabber\\": "src/"
+            "Buchin\\GoogleWebGrabber\\": "src/"
         }
     },
     "require-dev": {

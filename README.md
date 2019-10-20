@@ -1,6 +1,6 @@
-# Google Image Grabber
+# Google Web Grabber
 
-Scrape google images using PHP
+Scrape google web using PHP
 
 ## Getting Started
 
@@ -13,17 +13,17 @@ composer
 ### Installing
 
 ```bash
-composer require buchin/google-image-grabber
+composer require buchin/google-web-grabber
 ```
 
 ### Usage
 
 ```php
-use Buchin\GoogleImageGrabber\GoogleImageGrabber;
+use Buchin\GoogleWebGrabber\GoogleWebGrabber;
 
 $keyword = 'makan nasi';
 
-$images = GoogleImageGrabber::grab($keyword);
+$results = GoogleWebGrabber::grab($keyword);
 
 ```
 
