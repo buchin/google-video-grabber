@@ -19,11 +19,11 @@ composer require buchin/google-web-grabber
 ### Usage
 
 ```php
-use Buchin\GoogleWebGrabber\GoogleWebGrabber;
+use Buchin\GoogleVideoGrabber\GoogleVideoGrabber;
 
 $keyword = 'makan nasi';
 
-$results = GoogleWebGrabber::grab($keyword);
+$results = GoogleVideoGrabber::grab($keyword);
 
 ```
 
