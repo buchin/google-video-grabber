@@ -17,20 +17,26 @@ class GoogleVideoGrabber
 		    'device_type' => 'Desktop'
 		]);
 
-		$options  = [
-			'http' => [
-				'method'     =>"GET",
-				'user_agent' =>  $ua,
-			],
-			'ssl' => [
-				"verify_peer"      => FALSE,
-				"verify_peer_name" => FALSE,
-			],
-		];
+		// create curl resource
+		$ch = curl_init();
 
-		$context  = stream_context_create($options);
+		// set options
+		curl_setopt($ch, CURLOPT_URL, $url);
+		
+		if($options['proxy']){
+			curl_setopt($ch, CURLOPT_PROXY, $options['proxy']);
+		}
 
-		$response = file_get_contents($url, FALSE, $context);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // read more about HTTPS http://stackoverflow.com/questions/31162706/how-to-scrape-a-ssl-or-https-url/31164409#31164409
+		curl_setopt($ch, CURLOPT_USERAGENT, $ua);
+
+		// $output contains the output string
+		$response = curl_exec($ch);
+
+		// close curl resource to free up system resources
+		curl_close($ch); 
+
 
 		$htmldom = new Dom;
 		$htmldom->loadStr($response, []);
@@ -51,7 +57,7 @@ class GoogleVideoGrabber
 	            $result['thumbnail_mq']  = "https://i.ytimg.com/vi/" . $vquery['v'] . "/mqdefault.jpg";
 	            $result['thumbnail_hq']  = "https://i.ytimg.com/vi/" . $vquery['v'] . "/hqdefault.jpg";
 
-				$result['description'] = strip_tags(html_entity_decode($element->find('div.s > div > span')->innerHtml));
+				$result['description'] = $element->find('div.s > div > span')->innerHtml;
 				$result['title'] = html_entity_decode($element->find('div.r > a:nth-child(1) > h3')->innerHtml);
 
 				$result['duration'] = str_replace('&#9654;&nbsp;', '', $element->find('span.vdur')->innerHtml);
