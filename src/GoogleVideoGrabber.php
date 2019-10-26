@@ -9,12 +9,14 @@ use __;
 class GoogleVideoGrabber
 {
 	
-	public static function grab($keyword, $options = ['maxResults' => 10, 'api_key' => 'AIzaSyDfLPH6Y09edcZYmLPvbANg7AwQIOtO-nY'])
+	public static function grab($keyword, $options = [])
 	{
 		$client = new \Google_Client();
 		$client->setDeveloperKey($options['api_key']);
 
 		$youtube = new \Google_Service_YouTube($client);
+
+		$options = array_merge(['maxResults' => 10, 'api_key' => 'AIzaSyDfLPH6Y09edcZYmLPvbANg7AwQIOtO-nY'], $options);
 
 		$response = $youtube->search->listSearch('snippet', array(
 			'q' => $keyword,
