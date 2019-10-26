@@ -5,7 +5,8 @@
     "require": {
         "campo/random-user-agent": "^1.2",
         "thesoftwarefanatics/php-html-parser": "^1.8.0",
-        "maciejczyzewski/bottomline": "^0.0.9"
+        "maciejczyzewski/bottomline": "^0.0.9",
+        "google/apiclient": "~2.0"
     },
     "license": "MIT",
     "authors": [
