@@ -15,8 +15,12 @@ class GoogleVideoGrabber
 		return $my_array_of_vars['v'] ?? null;
 	}
 	
-	public static function grab($keyword, $options = ['maxResults' => 10, 'api_key' => 'AIzaSyDfLPH6Y09edcZYmLPvbANg7AwQIOtO-nY'])
+	public static function grab($keyword, $options = ['maxResults' => 10, 'full_data' => true])
 	{
+		$default = ['maxResults' => 10, 'full_data' => true ];
+
+		$options = array_merge($default, $options);
+
 		$hack = ' site:youtube.com/watch';
 		$items = @GoogleImageGrabber::grab($keyword . $hack);
 		$items = array_slice($items, 0, $options['maxResults']);
@@ -42,16 +46,24 @@ class GoogleVideoGrabber
 
 			$result['description'] = $item['domain'];
 			$result['title'] = ucwords($item['alt']);
-			$video = new Video($id);
-			$details = $video->getVideoInfo()['videoDetails'];
-			unset($details['thumbnail']);
-
-			$result = array_merge($result, $details);
 
 			$result['pubdate'] = '';
-			$result['uploader'] = $result['author'];
-			$result['duration_in_seconds'] = $result['lengthSeconds'];
+			$result['uploader'] = 'Unknown';
+			$result['duration_in_seconds'] = 0;
 			$result['duration'] = gmdate("H:i:s", $result['duration_in_seconds']);
+			
+			if($options['full_data']){
+				$video = new Video($id);
+				$details = $video->getVideoInfo()['videoDetails'];
+				unset($details['thumbnail']);
+
+				$result = array_merge($result, $details);
+
+				$result['uploader'] = $result['author'];
+				$result['duration_in_seconds'] = $result['lengthSeconds'];
+				$result['duration'] = gmdate("H:i:s", $result['duration_in_seconds']);
+			}
+			
 
 			$results[] = $result;
 		}
