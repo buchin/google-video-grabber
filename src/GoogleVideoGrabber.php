@@ -18,7 +18,7 @@ class GoogleVideoGrabber
 	public static function grab($keyword, $options = ['maxResults' => 10, 'api_key' => 'AIzaSyDfLPH6Y09edcZYmLPvbANg7AwQIOtO-nY'])
 	{
 		$hack = ' site:youtube.com/watch';
-		$items = GoogleImageGrabber::grab($keyword . $hack);
+		$items = @GoogleImageGrabber::grab($keyword . $hack);
 		$items = array_slice($items, 0, $options['maxResults']);
 
 		$results = [];
