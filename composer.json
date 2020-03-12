@@ -6,7 +6,7 @@
         "campo/random-user-agent": "^1.2",
         "thesoftwarefanatics/php-html-parser": "^1.8.0",
         "maciejczyzewski/bottomline": "^0.0.9",
-        "google/apiclient": "~2.0"
+        "buchin/google-image-grabber": "dev-master"
     },
     "license": "MIT",
     "authors": [
