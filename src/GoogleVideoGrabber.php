@@ -15,6 +15,18 @@ class GoogleVideoGrabber
 		return $my_array_of_vars['v'] ?? null;
 	}
 	
+	public static function strip($title)
+	{
+		$title = strtolower($title);
+		$title = str_replace(['youtube.com', 'youtube'], '', $title);
+		$title = explode(' ', $title);
+		$title = array_filter($title);
+		$title = array_unique($title);
+		$title = implode(' ', $title);
+
+		return $title;
+	}
+
 	public static function grab($keyword, $options = ['maxResults' => 10, 'full_data' => true])
 	{
 		$default = ['maxResults' => 10, 'full_data' => true ];
@@ -44,8 +56,13 @@ class GoogleVideoGrabber
 			$result['thumbnail_mq']  = "https://i.ytimg.com/vi/" . $result['videoid'] . "/mqdefault.jpg";
 			$result['thumbnail_hq']  = "https://i.ytimg.com/vi/" . $result['videoid'] . "/hqdefault.jpg";
 
-			$result['description'] = $item['domain'];
-			$result['title'] = ucwords($item['alt']);
+			$description = ucfirst(self::strip($item['domain']));
+
+			$result['description'] = $description;
+
+			$title = self::strip($item['alt'] . ' ' . $item['title']);
+			
+			$result['title'] = ucwords(self::strip($title));
 
 			$result['pubdate'] = '';
 			$result['uploader'] = 'Unknown';
